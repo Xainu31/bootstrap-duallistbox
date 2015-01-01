@@ -122,20 +122,26 @@
     });
 
     if (dualListbox.settings.showFilterInputs) {
-      filter(dualListbox, 1);
-      filter(dualListbox, 2);
+      filter(dualListbox, 1,false);
+      filter(dualListbox, 2,false);
     }
     refreshInfo(dualListbox);
   }
 
-  function filter(dualListbox, selectIndex) {
+  function filter(dualListbox, selectIndex,moveToTop) {
     if (!dualListbox.settings.showFilterInputs) {
       return;
     }
 
     saveSelections(dualListbox, selectIndex);
 
-    dualListbox.elements['select'+selectIndex].empty().scrollTop(0);
+    saveSelections(dualListbox, selectIndex);
+    if (moveToTop != false) {
+        dualListbox.elements['select' + selectIndex].empty().scrollTop(0);
+    }
+    else {
+        dualListbox.elements['select' + selectIndex].empty();
+    }
     var regex = new RegExp($.trim(dualListbox.elements['filterInput'+selectIndex].val()), 'gi'),
       options = dualListbox.element;
 
